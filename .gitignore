@@ -1,2 +1,5 @@
 *.aux
 *.log
+_region_*
+.DS_Store
+*.pdf

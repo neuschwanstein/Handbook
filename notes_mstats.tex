@@ -1,50 +1,5 @@
 \documentclass[10pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage{geometry}
-\usepackage{graphicx}
-\usepackage{amssymb}
-\usepackage{outlines}
-\usepackage{booktabs}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{mathrsfs}
-\usepackage{amsfonts}
-\usepackage{siunitx}
-\usepackage{bm}
-\usepackage{listings}
-
-\geometry{letterpaper}
-
-\AtBeginDocument{
-\def\labelitemi{\textbullet}%
-\def\labelitemii{$-$}%
-\def\labelitemiii{$\star$}%
-\def\labelitemiv{\maltese}
-}
-
-\newcommand{\dd}{\partial}
-\newcommand{\Bfix}{B_\text{fix}}
-\newcommand{\Bfl}{B_\text{fl}}
-\newcommand{\Vswap}{V_\text{swap}}
-\newcommand{\real}{\mathscr{R}}
-\newcommand{\grad}{\nabla}
-\newcommand{\normal}{\mathscr{N}}
-\newcommand{\logNormal}{\mathscr{LN}}
-\newcommand{\filtr}{\mathscr{F}}
-
-\DeclareMathOperator{\Corr}{Corr}
-\DeclareMathOperator{\Var}{Var}
-\DeclareMathOperator{\E}{E}
-\DeclareMathOperator{\Cov}{Cov}
-\DeclareMathOperator{\erf}{erf}
-\DeclareMathOperator{\erfc}{erfc}
-\DeclareMathOperator{\GammaDist}{Gamma}
-\DeclareMathOperator{\Exp}{Exp}
-\DeclareMathOperator{\Garch}{GARCH}
-\DeclareMathOperator{\diag}{diag}
-\DeclareMathOperator{\chol}{chol}
-
-\newcommand{\reff}[1]{\mbox{}~\hfill \footnotesize{[#1]}\normalsize}
+\input{preamble}
 
 \title{The Handbook of\\Mathematics, Statistics, and Various Other Topics}
 \author{Thierry Bazier Matte}
@@ -52,6 +7,22 @@
 
 \begin{document}
 \maketitle
+
+\part{Machine Learning}
+\begin{outline}
+  \1 In \textbf{logistic regression}, the following model is often adopted:
+  \begin{align*}
+    P(y=1|x) &= \frac{1}{1+\exp(-\theta^Tx)} = \sigma(\theta^Tx),\\
+    P(y=0|x) &= 1 - \sigma(\theta^Tx)
+  \end{align*}
+  with $\sigma(x)$ the \textbf{sigmoid function}.
+
+  \1 The \textbf{loss function} of the logistic regression is given by 
+  \begin{equation*}
+    J(\theta) = -\sum_i (y^{(i)}\log(h(x^{(i)})) + (1-y^{(i)})\log(1-h(x^{(i)}))).
+  \end{equation*}
+
+\end{outline}
 
 \part{Applied Mathematics, Optimization and Risk Theory}
 
@@ -81,6 +52,10 @@ Conversely, if $g$ is concave, then
   g(a) + g(b) \leq g(a+b).
 \end{equation*}
 
+\1 The \textbf{certainty equivalent} of a lottery $\tilde x$ with utility $u$ is defined by
+\begin{equation*}
+  CE(\tilde x) = u^{-1}(Eu(\tilde x)).
+\end{equation*}
 
 \end{outline}
 
