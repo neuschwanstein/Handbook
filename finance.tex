@@ -1,0 +1,365 @@
+\part{Finance Theory}
+
+\section{Black-Scholes Model}
+\begin{outline}
+  \1 Under the \textbf{Black-Scholes Model}, the evolution of $d$ assets $S_t\in\real^d$ is
+  given elementwise by
+  \begin{equation*}
+    S_t = S_0\exp((\mu - \tfrac{1}{2}\sigma^2)t + \sigma W_t),
+  \end{equation*}
+  with $\mu,\sigma\in\real^d$ and where $W$ is a d-brownian process with \textbf{correlation
+  matrix} $R$, or, equivalently, covariance matrix
+  \begin{equation*}
+    \Sigma=\diag(\sigma)R\diag(\sigma).
+  \end{equation*}
+
+  \1 With $b=\chol R$ and $\tilde W$ an \textbf{uncorrelated} d-brownian process, we have
+  \begin{equation*}
+    S_t = S_0\exp((\mu - \tfrac{1}{2}\sigma^2)t + \diag(\sigma)b^T\tilde W_t).
+  \end{equation*}
+
+  \1 Equivalently, with $a=\chol\Sigma = b\diag\sigma$,
+  \begin{equation*}
+    S_t = S_0\exp((\mu - \tfrac{1}{2}\sigma^2)t + a^T\tilde W_t).
+  \end{equation*}
+
+  \1 Matlab code, with $n=h^{-1}=252$ looks like
+  \begin{lstlisting}[language=Matlab,basicstyle=\footnotesize,numberstyle=\tiny]
+    a = chol(Sigma);
+    Z = randn(n,d);
+    X = h*ones(n,1)*(mu - 0.5*vol.^2)' - sqrt(h)*Z*a;
+    S = 100*exp(cumsum(X)); % nxd matrix
+  \end{lstlisting}
+
+  \1 In the bivariate case, the following relations hold:
+  \begin{gather*}
+    a = \begin{pmatrix}\sigma_1 & \rho\sigma_2\\0&\sqrt{1-\rho^2}\sigma^2\end{pmatrix}\\
+    \sigma_1 = a_{11}\\
+    \sigma_2 = \sqrt{a_{22}^2 + a_{12}^2}\\
+    \rho = \frac{a_{12}}{\sqrt{a_{22}^2 + a_{12}^2}}\\
+  \end{gather*}
+\end{outline}
+
+\subsection{Derivatives}
+\begin{outline}
+  \1 The value $c$ of a regular \textbf{european call} of an asset $S_t$ with strike $K$
+  is given by
+  \begin{gather*}
+    c = S_0n(d_1) - Ke^{-rT}n(d_2)\\
+    d_1 = \frac{\log(S_0/K) + rT + \tfrac{1}{2}\sigma^2T}{\sigma\sqrt{T}}\\
+    d_2 = d_1 - \sigma\sqrt{T}.
+  \end{gather*}
+
+  \1 The \textbf{put-call parity} relates the value $c$ of an european call with the value
+  $p$ of an \textbf{european put}:
+  \begin{equation*}
+    c - p = S_0 - Ke^{-rT}.
+  \end{equation*}
+
+  \1 The \textbf{exchange option} with parameters $q_1,q_2$ over two assets
+  $S^{(1)}_t,S^{(2)}_t$ has payoff
+  \begin{equation*}
+    \Psi(S^{(1)}_t,S^{(2)}_t) = \max(q_2S^{(2)}_T - q_1S^{(1)}_T,0).
+  \end{equation*}
+  Its value $c$ is given by:
+  \begin{gather*}
+    c = q_2S^{(2)}_0\,n(d_1) - q_1S^{(1)}_0\,n(d_2)\\
+    \sigma^2 = \sigma_1^2 + \sigma_2^2 - 2\rho\sigma_1\sigma_2\\
+    d_1 = \frac{\log(q_2S^{(2)}_0 - \log(q_1S^{(1)}_0) +
+      \tfrac{1}{2}T\sigma^2}{\sigma\sqrt{T}}\\
+    d_1 = \frac{\log(q_2S^{(2)}_0 - \log(q_1S^{(1)}_0) -
+      \tfrac{1}{2}T\sigma^2}{\sigma\sqrt{T}},
+  \end{gather*}
+  and its delta by
+  \begin{gather*}
+    \Delta_1 = q_2\,n(d1)\\
+    \Delta_2 = -q_1\,n(d2).
+  \end{gather*}
+\end{outline}
+
+
+
+\section{Interest Rates}
+
+\subsection{Ornstein Uhlenbeck Process Model}
+\begin{outline}
+  \1 The \textbf{Ornstein-Uhlenbeck process} model of the \textbf{spot rate} $r_t$ is
+  given by:
+  \begin{equation*}
+    dr_t = \alpha(\beta - r_t)dt + \sigma\,dW_t.
+  \end{equation*}
+
+  \1 The Ornstein-Uhlenbeck process is invariant to new measures
+  $\tilde r(t) = \lambda r(mt)$. We have the following transformation rules:
+  \begin{gather*}
+    \tilde\alpha = m\alpha\\
+    \tilde\beta = \lambda\beta\\
+    \tilde\sigma = \sqrt{m}\lambda\sigma\\
+    \tilde q_1 = \sqrt{m}q_1\\
+    \tilde q_2 = \sqrt{m}\lambda^{-1}q_2
+  \end{gather*}
+
+  \1 In the \textbf{risk neutral measure}, if $r_t$ is also an Ornstein-Uhlenbeck process,
+  and the \textbf{market price of risk} is given by
+  \begin{equation*}
+    q = q_1 + q_2r,
+  \end{equation*}
+  then
+  \begin{equation*}
+    d\tilde r_t = a(b - \tilde r_t)dt + \sigma\,d\tilde W_t.
+  \end{equation*}
+
+  \1 The transformation between the two measures is given by
+  \begin{equation*}
+    a = \alpha + q_2\sigma,\qquad b = \frac{\alpha\beta - q_1\sigma}{a}.
+  \end{equation*}
+
+  \1 Under the \textbf{number convention}, the 1\$ face value \textbf{zero-coupon bond
+    valuation} under the risk neutral measure is given by
+  \begin{equation*}
+    P_T = \exp(A_T - r_0\,B_T).
+  \end{equation*}
+  Under the \textbf{percentage convention}, it is given by
+  \begin{equation*}
+    P_T = \exp(\tilde A_T - r_0\tilde B_T/100),
+  \end{equation*}
+  where
+  \begin{gather*}
+    B_T = \frac{1-\exp(-aT)}{a},\\
+    \tilde B_T = \frac{1-\exp(-aT)}{a},\\
+    A_T = \left(\frac{\sigma^2}{2a^2}-b\right)(T - B_T) - \frac{\sigma^2}{4a}B_T^2,\\
+    \tilde A_T = \left(\frac{\sigma^2}{\num{20000}a^2}-\frac{b}{100}\right)(T - \tilde
+    B_T) - \frac{\sigma^2}{\num{40000}a} \tilde B_T^2.
+  \end{gather*}
+
+  \1 Under the \textbf{percentage convention/yearly basis}, The \textbf{long term yield}
+  is given by
+  \begin{equation*}
+    R_\infty = b - \frac{\sigma^2}{200a^2}.
+  \end{equation*}
+
+  \1 Under the \textbf{percentage convention/yearly basis}, the \textbf{relation between
+    the spot rate and the yield} is given by
+  \begin{gather*}
+    r_0 = \frac{T\,R_T + 100 \tilde A_T}{\tilde B_T},\\
+    R_T = \frac{r_0\tilde B_T - 100\tilde A_T}{T}.
+  \end{gather*}
+  
+  \1 The Ornstein-Uhlenbeck is a \textbf{markovian, stationary and gaussian process}. Its
+  law is given by
+  \begin{equation*}
+    r_t \sim \normal(\mu_t,\sigma^2_t)
+  \end{equation*}
+  with
+  \begin{gather*}
+    \mu_t = \beta + e^{-\alpha t}(r_0 - \beta)\\
+    \sigma^2_t = \sigma^2\frac{1-e^{-2\alpha t}}{2\alpha}.
+  \end{gather*}
+  Furthermore, if $\alpha>0$, then the \textbf{stationnary distribution} of $r_t$ is
+  \begin{equation*}
+    r_\infty \sim \normal(\beta,\sigma^2/(2\alpha)).
+  \end{equation*}
+  Finally, 
+  \begin{gather*}
+    \Cov(r_t,r_s) = \sigma^2\frac{e^{-\alpha(t-s)}-e^{-\alpha(t+s)}}{2\alpha},\quad t>s\\
+    \Cov(r_\infty,r_t) = 0.
+  \end{gather*}
+\end{outline}
+
+
+\subsection{Cox-Ingersoll-Ross Model}
+\begin{outline}
+  \1 The \textbf{CIR model} of the spot rate $r_t$ is given by:
+  \begin{equation*}
+    dr_t = \alpha(\beta - r_t)dt + \sigma\sqrt{r_t}dW_t.
+  \end{equation*}
+
+  \1 The Feller process process is invariant to updated measures
+  $\tilde r(t) = \lambda r(mt)$. We have the following transformation rules:
+  \begin{gather*}
+    \tilde\alpha = m\alpha\\
+    \tilde\beta = \lambda\beta\\
+    \tilde\sigma = \sqrt{m\lambda}\sigma\\
+    \tilde q_1 = \sqrt{\lambda}q_1\\
+    \tilde q_2 = \lambda^{-1/2}q_2\\
+    \tilde q_2 = \lambda^{-1}q_2
+  \end{gather*}
+  The transformation with $m\neq1$ doesn't carry to $q$.
+
+  \1 In the \textbf{risk neutral measure} with \textbf{market price of risk} given by
+  \begin{equation*}
+    q = q_1 r^{-1/2} + q_2 r^{1/2}
+  \end{equation*}
+  then 
+  \begin{equation*}
+    d\tilde r_t = a(b-\tilde r_t)dt + \sigma\sqrt{\tilde r_t}d\tilde W_t.
+  \end{equation*}
+
+  \1 The transformation between the two measures is given by
+  \begin{equation*}
+    a = \alpha + q_2\sigma,\qquad b=\frac{\alpha\beta - q_1\sigma}{a}.
+  \end{equation*}
+
+  \1 Under the \textbf{number convention}, the 1\$ face value \textbf{zero-coupon bond
+    valuation} under the risk neutral measure is given by
+  \begin{equation*}
+    P_T = \exp(A_T - r_0B_T),
+  \end{equation*}
+  whereas under the \textbf{percentage convention}, it is given by
+  \begin{equation*}
+    P_T = \exp(\tilde A_T - r_0\tilde B_T/100),
+  \end{equation*}
+  where
+  \begin{gather*}
+    \gamma = \sqrt{a^2 + 2\sigma^2}\\
+    \tilde\gamma = \sqrt{a^2 + 2\sigma^2/100}\\
+    \eta = (\gamma+a)(1-e^{-\gamma T})+2\gamma e^{-\gamma T}\\
+    \tilde \eta  = (\tilde\gamma + a)(1-e^{-\tilde\gamma T})+2\tilde\gamma e^{-\tilde\gamma T}\\
+    B_T = \frac{2(1-e^{-\gamma T})}{\eta}\\
+    \tilde B_T = \frac{2(1-e^{-\tilde\gamma T})}{\tilde\eta}\\
+    A_T = \frac{2ab}{\sigma^2}\log\left(\frac{2\gamma
+        e^{T(a-\gamma)/2}}{\eta}\right)\\
+    \tilde A_T = \frac{2ab}{\sigma^2}\log\left(\frac{2\tilde\gamma
+        e^{T(a-\tilde\gamma)/2}}{\tilde\eta}\right)
+  \end{gather*}
+
+  \1 Under the \textbf{percentage convention/yearly basis}, the \textbf{long term yield}
+  is given by
+  \begin{equation*}
+    R_\infty = \frac{2ab}{a+\tilde\gamma}.
+  \end{equation*}
+
+  \1 Under the \textbf{percentage convention/yearly basis}, the \textbf{relation between
+    the spot rate and the yield} is given by
+  \begin{gather*}
+    r_0 = \frac{T\,R_T + 100\tilde A_T}{\tilde B_T},\\
+    R_T = \frac{r_0\tilde B_T - 100\tilde A_T}{T}.
+  \end{gather*}
+\end{outline}
+
+
+\section{Lévy Models}
+
+\subsection{Merton Model}
+\begin{outline}
+  \1 The \textbf{Merton model} has the following form:
+  \begin{equation*}
+    at + \sigma W_t + \sum_{i=1}^{N_t} \xi_j,
+  \end{equation*}
+  with $N_t$ a $\lambda$-Poisson process, $\xi_j \sim \normal(\gamma,\delta^2)$ and
+  \begin{gather*}
+    a = \mu -\lambda\kappa - \tfrac{1}{2}\sigma^2,\\
+    \kappa=  \exp(\gamma+\delta^2/2) - 1.
+  \end{gather*}
+
+  \1 Under the \textbf{risk neutral measure}, the following transformation take place 
+  \begin{gather*}
+    K_\phi = e^{\zeta_0}E[e^{-\xi_i/2}]\\
+    \tilde\lambda = K_\phi\lambda\\
+    \tilde\sigma = \sigma\\
+    \tilde\gamma = \gamma + \zeta_1\delta^2\\
+    \tilde\delta = \delta\\
+    \tilde\eta(x) = e^{\phi(x)}K_\phi^{-1}\eta(x),
+  \end{gather*}
+  with $\eta(x)$ the density of the jumps $\xi_1\sim\normal(\gamma,\delta^2)$, ie.
+  \begin{equation*}
+    \eta(x) = \frac{1}{\delta\sqrt{2\pi}}\exp\left(-\frac{(x-\gamma)^2}{2\delta^2}\right).
+  \end{equation*}
+\end{outline}
+
+\subsection{Kou Model}
+
+\begin{outline}
+  \1 The \textbf{Kou Model} has the following paramaters:
+  \begin{gather*}
+    a = \mu - \lambda\kappa - \tfrac{1}{2}\sigma^2,\\
+    \kappa = \frac{1+p\eta_2+(p-1)\eta_1}{(\eta_1-1)(\eta_2+1)},\\
+    \eta(x) = p\eta_1 e^{-\eta_1 x} \bm 1_{x>0} + (1-p)\eta_2 e^{-\eta_2x}\bm 1_{x\leq 0}.
+  \end{gather*}
+
+  \1 Under the \textbf{weighted-symmetric representation}, we have
+  \begin{gather*}
+    \zeta = \delta Y_{\Exp(1)}\\
+    \delta = \eta_2^{-1}\\
+    \theta = 0\\
+    \omega = \eta_2/\eta_1.
+  \end{gather*}
+\end{outline}
+
+
+\subsection{Jump Diffusion Models}
+\begin{outline}
+  \1 For \textbf{jump diffusion models} of the form
+  \begin{equation*}
+    X_t = at + \sigma W_t + \sum_{j=1}^{N_t}\xi_j,
+  \end{equation*}
+  the following identities hold
+  \begin{gather*}
+    \nu = \lambda\eta\\
+    \kappa = E[\exp(\xi_1)-1] = \int(e^x-1)\nu(dx)\\
+    a = \mu -\lambda\kappa -\tfrac{1}{2}\sigma^2.
+  \end{gather*}
+
+  \1 The jump diffusion processes are always represented using their \textbf{natural
+    characteristics}.
+
+  \1 The $\kappa$ parameter is interpreted as the average jump size, $\lambda$ is the
+  average frequency of the jumps.
+
+  \1 The \textbf{martingale measure} parameters of jump diffusion processes obtained with
+  $U_{b,\phi}$ (p.~200) are given by
+  \begin{gather*}
+    K_\phi = E[\exp(\phi(\xi_1))]\\
+    \tilde\lambda = \lambda K_\phi\\
+    \tilde\nu = \tilde\lambda\tilde\eta\\
+    \tilde\eta = e^{\phi(x)}K_\phi^{-1}\eta(x)\\
+    \tilde\sigma = \sigma\\
+    \tilde\kappa = E[\exp(\tilde\xi_1)-1] = \int(e^x-1)\tilde\nu(dx)\\
+    \tilde a = a + b\sigma +\int_{-1}^1x(e^{\phi(x)}-1)\nu(dx)\\
+    \tilde a^{\text{(nat)}} = a^{\text{(nat)}} + b\sigma
+  \end{gather*}
+
+  \1 The following relation also holds:
+  \begin{align*}
+    r &= a + b\sigma + \tfrac{1}{2}\sigma^2 + \int(e^x-1)\tilde\nu(dx)\\
+      &= \mu + b\sigma - \lambda\kappa + \tilde\lambda\tilde\kappa
+  \end{align*}
+\end{outline}
+% \subsection{Lévy Characteristics}
+% \begin{outline}
+%   \1 The set $\{a,\sigma^2,\nu\}$ are the \textbf{natural characteristics} of a Lévy
+%   process $X_t$ if its characteristic function $\psi(u)$ satisfies
+%   \begin{equation*}
+%     \psi(u) = iau - \tfrac{1}{2}\sigma^2u^2 + \int(e^{iux}-1)\nu(dx).
+%   \end{equation*}
+% \end{outline}
+
+\section{Stochastic Volatility Models}
+
+\subsection{Discrete Models}
+\begin{outline}
+  \1 The considered models have the form
+  \begin{align*}
+    X_t &= \mu_t + \sigma_te_t\\
+        &= \mu_t + \sqrt{h_t}e_t
+  \end{align*}
+  where 
+  \begin{gather*}
+    E[e_t|\filtr_{t-1}]=0\\
+    \Var[e_t|\filtr_{t-1}] = 1,
+  \end{gather*}
+  and we have the correspondance
+  \begin{equation*}
+    \sigma^2_t = h_t.
+  \end{equation*}
+
+  \1 The \textbf{standard GARCH$(1,1)$} has the form
+  \begin{equation*}
+    h_t = \omega + \alpha h_{t-1}e^2_{t-1} + \beta h_{t-1}.
+  \end{equation*}
+\end{outline}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "handbook"
+%%% End:

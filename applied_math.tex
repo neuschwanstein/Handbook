@@ -1,0 +1,53 @@
+\part{Applied Mathematics, Optimization and Risk Theory}
+
+\section{Convexity and Risk Theory}
+\begin{outline}
+\1 The \textbf{marginal utility} of utility $u$ is defined by $u''$. Therefore, a
+decreasing marginal utility implies a risk-averse utility.
+\reff{Eeckhoudt, p.9}
+
+\1 \textbf{Jensen's Inequality.} If $g$ is a convex function and $X$ is a
+random variable, then
+\begin{equation*}
+  g(E[X]) \leq E[g(X)].
+\end{equation*}
+Conversely, if $g$ is concave, then
+\begin{equation*}
+  g(E[X]) \geq E[g(X)].
+\end{equation*}
+
+\1 The \textbf{Taylor expansion} of $E[f(X)]$ is given by:
+\begin{equation*}
+  E[f(X)] = f(E[X])+ \tfrac{1}{2}\Var[X]f''(E[X]) + \cdots + \tfrac{1}{j!}\gamma_jf^{(j)}(E[X])
+  + \cdots
+\end{equation*},
+where
+\begin{equation*}
+  \gamma_n = E[(X-E[X])^n].
+\end{equation*}
+
+% \1 The \textbf{Taylor expansion} of a function around the $E[X]$:
+% \begin{equation*}
+%   f(x) = f(E[X]) + \tfrac{1}{2}\Var(X)u''(\xi(x)).
+% \end{equation*}
+
+\1 If $g$ is convex and $g(0)\leq0$, then $g$ is \textbf{superadditive}, ie.
+\begin{equation*}
+  g(a) + g(b) \leq g(a+b).
+\end{equation*}
+Conversely, if $g$ is concave and $g(0)\geq 0$ then $g$ is \textbf{subadditive}, ie. 
+\begin{equation*}
+  g(a) + g(b) \geq g(a+b).
+\end{equation*}
+
+\1 The \textbf{certainty equivalent} of a lottery $\tilde x$ with utility $u$ is defined by
+\begin{equation*}
+  CE(\tilde x) = u^{-1}(Eu(\tilde x)).
+\end{equation*}
+
+\end{outline}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "handbook"
+%%% End:
