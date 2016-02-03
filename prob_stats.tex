@@ -4,55 +4,55 @@
 \begin{outline}
 Let $A$ and $B$ be two events, possibly overlapping. Then,
 \1 \textbf{Disjunction (or).} 
-\begin{equation*}
+\[
   P(A\vee B) = P(A) + P(B) - P(A \wedge B)
-\end{equation*}
+\]
 \1 \textbf{Conjunction (and).}
-\begin{equation*}
+\[
   P(A\wedge B) = P(A)\times P(B|A)
-\end{equation*}
+\]
 \end{outline}
 
 \section{Definitions}
 \begin{outline}
 \1 The \textbf{cumulative distribution function} or \textbf{CDF} of a random variable is
 defined by
-\begin{equation*}
+\[
   F_X(x) = P(X\leq x).
-\end{equation*}
+\]
 We also have the following identity:
-\begin{equation*}
+\[
   P(a<X\leq b) = F_X(b) - F_X(a).
-\end{equation*}
+\]
 
 \1 If $X$ is a continuous random variable, then its \textbf{probability density function}
 or \textbf{PDF} is defined by
-\begin{equation*}
+\[
   f_X(x) = \frac{d}{dx}F_X(x).
-\end{equation*}
+\]
 Equivalently, we also have
-\begin{equation*}
+\[
   F_X(x) = \int_{-\infty}^x f_X(t)\,dt.
-\end{equation*}
+\]
 
 \1 By definition of the PDF, 
-\begin{equation*}
+\[
   P(a\leq X\leq B) = \int_{a}^bf_X(x)\,dx.
-\end{equation*}
+\]
 
 \1 The \textbf{quantile function} $Q:[0,1]\to R$, $R$ being the range of $X$, is given, in
 the continuous and nice case by:
-\begin{equation*}
+\[
   Q(p) = F_X^{-1}(p),
-\end{equation*}
+\]
 ie the value x such that 
-\begin{equation*}
+\[
   F_X(x) = P(X\leq x) = p,
-\end{equation*}
+\]
 and in the general case by
-\begin{equation*}
+\[
   Q(p) = \inf\{x: p\leq F_X(x)\}.
-\end{equation*}
+\]
 
 \1 The quantile of $q_p$ of $X\sim\normal(\mu,\sigma^2)$ is obtained by using
 $(X-\mu)/\sigma$, ie. $\mu + \sigma q_p(\normal(0,1))$.
@@ -70,40 +70,50 @@ $(X-\mu)/\sigma$, ie. $\mu + \sigma q_p(\normal(0,1))$.
 \end{enumerate}
 
 \1 The \textbf{expected value} of a random variable $X$ with density $f$ is defined by
-\begin{equation*}
-  E[X] = \int x\,f(x)\,dx.
-\end{equation*}
+\[
+  \E[X] = \int x\,f(x)\,dx.
+\]
 In general, if $X$ is defined on probability space $(\Omega,\mathscr{F},P)$, then 
-\begin{equation*}
-  E[X] = \int_\Omega X\,dP = \int_\Omega X(\omega)P(d\omega).
-\end{equation*}
+\[
+  \E[X] = \int_\Omega X\,dP = \int_\Omega X(\omega)P(d\omega).
+\]
+
+\1 The expected value can be related to the probability with
+\[
+  \Pr\{X\geq t\} = \E[\bm 1_{\{X\geq t\}}].
+\]
 
 \1 The \textbf{law of total expectation} states that
-\begin{equation*}
-  E[X] = E[E[X|\mathscr{F}_t]].
-\end{equation*}
+\[
+  \E[X] = \E[\E[X|\mathscr{F}_t]].
+\]
 
 \1 The \textbf{variance} of a random variable $X$ is defined by
 \begin{align*}
-  \Var(X) &= E[(X-E[X])^2]\\
-  \Var(X) &= E[X^2] - E[X]^2.
+  \Var(X) &= \E[(X-\E[X])^2]\\
+  \Var(X) &= \E[X^2] - \E[X]^2.
 \end{align*}
+
+\1 If $X_i$ are independant random variables, then
+\[
+  \Var\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n\Var X_i.
+\]
 
 \1 The \textbf{covariance} of two random variables is defined by
 \begin{align*}
-  \Cov(X,Y) &= E[(X-E[X])(Y-E[Y])]\\
-            &= E[XY] - E[X]E[Y].
+  \Cov(X,Y) &= \E[(X-\E[X])(Y-\E[Y])]\\
+            &= \E[XY] - \E[X]\E[Y].
 \end{align*}
 
 \1 The \textbf{correlation} of two random variables is defined by
-\begin{equation*}
+\[
   \Corr(X,Y) = \frac{\Cov(X,Y)}{\Var(X)\Var(Y)}.
-\end{equation*}
+\]
 
 \1 The \textbf{covariance matrix} $\Sigma$ of random variables $X_i$ is defined by
 \begin{gather*}
   \Sigma_{ij} = \Cov(X_i,X_j)\\
-  \Sigma = E[(X-E[X])(X-E[X])^T]\\
+  \Sigma = \E[(X-\E[X])(X-\E[X])^T]\\
   \Sigma = \diag(\sigma)R\diag(\sigma).
 \end{gather*}
 
@@ -114,46 +124,62 @@ In general, if $X$ is defined on probability space $(\Omega,\mathscr{F},P)$, the
 \end{gather*}
 
 \1 The \textbf{skewness} $\gamma_1$ of a random variable $X$ is defined by
-\begin{equation*}
-  \gamma_1 = \frac{1}{\sigma^3}E[(X-\mu)^3].
-\end{equation*}
+\[
+  \gamma_1 = \frac{1}{\sigma^3}\E[(X-\mu)^3].
+\]
 
 \1 The \textbf{kurtosis} $\gamma_2$ of a random variable $X$ is defined by
-\begin{equation*}
-  \gamma_2 = \frac{1}{\sigma^4}E[(X-\mu)^4].
-\end{equation*}
+\[
+  \gamma_2 = \frac{1}{\sigma^4}\E[(X-\mu)^4].
+\]
 
 \1 The \textbf{characteristic function} $\varphi_X(t)$ of a random variable $X$ is defined by
-\begin{equation*}
-  \varphi_X(t) = E[\exp(itX)].
-\end{equation*}
+\[
+  \varphi_X(t) = \E[\exp(itX)].
+\]
 
 \1 The \textbf{moment generation function} $M_X(t)$ of a random variable $X$ is defined by
-\begin{equation*}
-  M_X(t) = E[\exp(tX)].
-\end{equation*}
+\[
+  M_X(t) = \E[\exp(tX)].
+\]
 Let $m_i$ be the $i$\textsuperscript{th} moment of $X$. Then,
-\begin{equation*}
+\[
   M_X(t) = 1+tm_1 + \tfrac{1}{2!}t^2m_2 + \tfrac{1}{3!} t^3m_3 + \cdots
-\end{equation*}
+\]
 
 \1 The \textbf{cumulants} $\kappa_n$ of a random variable $X$ are defined by
-\begin{equation*}
+\[
   \kappa_n(X) = \left.\frac{d^n}{dt^n}\log(M_X(t))\right\vert_{t=0}.
-\end{equation*}
+\]
 The following rule holds
-\begin{equation*}
+\[
   \kappa_n(aX + bY) = a^n\kappa_n(X) + b^n\kappa(Y).
-\end{equation*}
+\]
 We also have
 \begin{align*}
-  \kappa_1(X) &= E[X]=\mu\\
+  \kappa_1(X) &= \E[X]=\mu\\
   \kappa_2(X) &= \Var(X) = \sigma^2\\
-  \kappa_3(X) &= E[(X-\mu)^3]\\
-  \kappa_4(X) &= E[(X-\mu)^4] - 3\sigma^4.
+  \kappa_3(X) &= \E[(X-\mu)^3]\\
+  \kappa_4(X) &= \E[(X-\mu)^4] - 3\sigma^4.
 \end{align*}
 In particular, the skewness $\gamma_1 = \kappa_3/\sigma^3$ and the kurtosis $\gamma_2 =
 3+\kappa_4/\sigma^4$. 
+\end{outline}
+
+
+\section{Concentration Inequalities}
+\begin{outline}
+\1 The \textbf{Markov's Inequality} states that for any $Y\subsim I\subseteq\real_{+}$ and any
+non-decreasing and non-negative function $\phi:I\to\real$, then, for any $t\in I$,
+\[
+  \Pr\{Y\geq t\}\leq\Pr\{\phi(Y)\geq\phi(t)\}\leq\frac{\E\phi(Y)}{\phi(t)}.
+\]
+
+\1 From Markov's inequality, we derive \textbf{Chebyshev's Inequality}, using
+$I=(0,\infty)$ and $\phi:t\to t^2$:
+\[
+  \Pr\{|Z-\E Z|\geq t\} \leq \frac{\Var(Z)}{t^2}.
+\]
 \end{outline}
 
 
@@ -164,20 +190,20 @@ In particular, the skewness $\gamma_1 = \kappa_3/\sigma^3$ and the kurtosis $\ga
   (variance of $t$, so standard deviation $\sqrt{t}$).
 
   \1 A $d$-dimensional brownian processes $W$ is correlated with matrix $R$ if
-  \begin{equation*}
+  \[
     W_t - W_s \sim \normal_d(0, R(t-s)).
-  \end{equation*}
+  \]
 
   % \1 In particular, two brownian processes $V$ and $W$ have correlation $\rho$ if
 
   \1 The \textbf{reflection principle} states that 
-  \begin{equation*}
+  \[
     P(M_t \geq a) = 2P(W_t \geq a),
-  \end{equation*}
+  \]
   where 
-  \begin{equation*}
+  \[
     M_t = \sup_{0\leq s \leq t} W_t.
-  \end{equation*}
+  \]
 \end{outline}
 
 \section{Distributions}
@@ -204,9 +230,9 @@ In particular, the skewness $\gamma_1 = \kappa_3/\sigma^3$ and the kurtosis $\ga
 
 \begin{outline}
   \1 Linear combination of normal variables remains normal:
-  \begin{equation*}
+  \[
     \sum_i a_i X_{\normal(\mu_i,\sigma^2_i)} \sim \normal(\sum_ia_i\mu_i,\sum_i(a_i \sigma_i)^2).
-  \end{equation*}
+  \]
 \end{outline}
 
 \subsection{Lognormal Distribution}
@@ -222,14 +248,14 @@ In particular, the skewness $\gamma_1 = \kappa_3/\sigma^3$ and the kurtosis $\ga
 
 \begin{outline}
   \1 By definition,
-  \begin{equation*}
+  \[
     \exp X_{\normal(\mu,\sigma^2)} \sim \logNormal(\mu,\sigma^2).
-  \end{equation*}
+  \]
 
   \1 The following properties hold:
   \begin{gather*}
     a X_{\logNormal(\mu,\sigma^2)} \sim \logNormal(\mu+\log a,\sigma^2)\\
-    E[\exp(aX_{\normal(\mu,\sigma^2)})] = \exp(a\mu + \tfrac{1}{2}(a\sigma)^2).
+    \E[\exp(aX_{\normal(\mu,\sigma^2)})] = \exp(a\mu + \tfrac{1}{2}(a\sigma)^2).
   \end{gather*}
 
 \end{outline}
@@ -261,9 +287,9 @@ In particular, the skewness $\gamma_1 = \kappa_3/\sigma^3$ and the kurtosis $\ga
   $\GammaDist(\nu/2,2) = \chi^2(\nu)$.
 
   \1 If $X_1,\dots,X_n$ are independent and $X_i\sim\GammaDist(\alpha_i,\beta)$, then
-  \begin{equation*}
+  \[
     \sum_iX_i \sim \GammaDist(\sum_i \alpha_i,\beta).
-  \end{equation*}
+  \]
 
   \1 
   \begin{tabular}{ll}
@@ -285,24 +311,24 @@ In particular, the skewness $\gamma_1 = \kappa_3/\sigma^3$ and the kurtosis $\ga
 \begin{outline}
   \1 The \textbf{maximum likelihood estimation} for a parameter $\theta \in \real^p$
   converges to a multivariate gaussian distribution:
-  \begin{equation*}
+  \[
     \sqrt{n}(\hat\theta_n - \theta) \leadsto \normal(0,\Sigma),
-  \end{equation*}
+  \]
   where $\Sigma$ is the \textbf{Penrose inverse} of $\hat I_\theta$, the \textbf{Fisher
     information matrix}. In pratice, we can approximate $\hat I_\theta = n^{-1}\hat H_n$
   the \textbf{hessian} at $\hat\theta_n$ so that
-  \begin{equation*}
+  \[
     \Sigma = n\hat H_n^{-1}.
-  \end{equation*}
+  \]
 
   \1 The \textbf{Slutzky theorem} states that if 
-  \begin{equation*}
+  \[
     \sqrt{n}(\hat\theta_n - \theta) \leadsto \normal_m(0,\Sigma),
-  \end{equation*}
+  \]
   and $f:\real^m\to\real^p$, then 
-  \begin{equation*}
+  \[
     \sqrt{n}(f(\hat\theta_n) - f(\theta)) \leadsto \normal_p(0,Df(\theta)\,\Sigma\,Df(\theta)^T),
-  \end{equation*}
+  \]
   where $Df(\theta)\in\real^{p\times m}$ is the \textbf{jacobian} of $f$. In pratice,
   $Df(\theta)$ is estimated by $Df(\hat\theta_n)$.
 \end{outline}
@@ -335,32 +361,32 @@ F_1$, $X'_2=F_2^{-1}(U_2)\sim F_2$ and $\Corr(X'_1,X'_2)=0$.
 \reff{Remillard, Prop. 8.4.1, p.272}
 
 \1 The \textbf{Rosenblatt} transform of a copula $c(u,v)$ is given by
-\begin{equation*}
+\[
   \psi(u,v) = \left(u,\frac{\partial_u c(u,v)}{\partial_u c(u,1)}\right).
-\end{equation*}
+\]
 Therefore, if $(U,V)\sim C$, then the following identity holds
-\begin{equation*}
+\[
   \psi(U,V) \sim C_\perp.
-\end{equation*}
+\]
 
 \1 For any \textbf{elliptical copula}, the relation between the \textbf{correlation
   matrix} $\rho$ and the \textbf{Kendall tau} is given by
-\begin{equation*}
+\[
   \tau = \frac{2}{\pi}\arcsin(\rho).
-\end{equation*}
+\]
 In particular, in the bivariate case, if $\tau=1/2$, then $\rho=2^{-1/2}$.
 \reff{p.298}
 
 \1 For \textbf{bivariate archimedean copulas}, the relation between the \textbf{generator}
 $\phi(t)$ and the \textbf{Kendall tau} is given by
-\begin{equation*}
+\[
   \tau = 1 + 4\int_0^1\frac{\phi(t)}{\phi'(t)}\,dt.
-\end{equation*}
+\]
 
 \1 The \textbf{archimedean generator} $\phi(t)$ is such that
-\begin{equation*}
+\[
   c(u,v) = \phi^{-1}(\phi(u) + \phi(v)).
-\end{equation*}
+\]
 \end{outline}
 
 \subsection{Copula Families}
@@ -368,9 +394,9 @@ $\phi(t)$ and the \textbf{Kendall tau} is given by
 \subsubsection{The Frank Copula [p.~306]}
 \begin{outline}
   \1 The \textbf{Frank copula} for $d=2$ is given by
-  \begin{equation*}
+  \[
     C(u,v) = \frac{1}{\log\theta}\log\left(\frac{\theta + \theta^{u+v} - \theta^u - \theta^v}{\theta-1}\right).
-  \end{equation*}
+  \]
 
   \1 With $d=2$, the following identities hold:
   \begin{gather*}
@@ -389,9 +415,9 @@ $\phi(t)$ and the \textbf{Kendall tau} is given by
   \end{gather*}
 
   \1 For $d=2$, the \textbf{generator} is given by
-  \begin{equation*}
+  \[
     \phi(t) = \frac{t^{-\theta}-1}{\theta},
-  \end{equation*}
+  \]
   for $\theta>2$.
 
   \1 With $d=2$, the following identites hold:
@@ -408,22 +434,22 @@ $\phi(t)$ and the \textbf{Kendall tau} is given by
   \end{gather*}
 
   \1 This copula family is only \textbf{valid} for
-  \begin{equation*}
+  \[
     \theta\geq-\frac{1}{d-1}.
-  \end{equation*}
+  \]
 \end{outline}
 
 \subsubsection{The Gumbel Copula [p.~305]}
 \begin{outline}
   \1 In the bivariate case, for $0<\theta\leq1$, the \textbf{Gumbel copula} is given by
-  \begin{equation*}
+  \[
     C(u,v) = \exp(-((-\log u)^{1/\theta} + (-\log v)^{1/\theta})^\theta)
-  \end{equation*}
+  \]
 
   \1 Its generator is given by
-  \begin{equation*}
+  \[
     \phi(t) = (-\log t)^{1/\theta}.
-  \end{equation*}
+  \]
 
   \1 The following identities hold:
   \begin{gather*}
@@ -432,9 +458,9 @@ $\phi(t)$ and the \textbf{Kendall tau} is given by
   \end{gather*}
 
   \1 The relation between $\theta$ and $\tau$ is given by
-  \begin{equation*}
+  \[
     \tau = 1-\theta.
-  \end{equation*}
+  \]
 \end{outline}
 
 
@@ -442,24 +468,24 @@ $\phi(t)$ and the \textbf{Kendall tau} is given by
 \begin{outline}
   \1 The \textbf{chain rule} of $h(x) = g(f(x))$, where $f:\real^n\to\real$ and
   $g:\real\to\real$ is given by
-  \begin{equation*}
+  \[
     \grad h(x) = g'(f(x))\grad f(x).  
-  \end{equation*}
+  \]
 
   \1 The infinite \textbf{Taylor expansion} of $f:\real\to\real$ around $x_0$ is given by
-  \begin{equation*}
+  \[
     f(x) = f(x_0) + f'(x_0)(x-x_0) + \tfrac{1}{2} f''(x_0)(x-x_0)^2 +
     \tfrac{1}{3!}f'''(x_0)(x-x_0)^3 + \cdots.
-  \end{equation*}
+  \]
 \end{outline}
 
 
 \section{Linear Algebra}
 \begin{outline}
   \1 The inverse of a $2\times2$ matrix is given by
-  \begin{equation*}
+  \[
     \begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1} = \frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}.
-  \end{equation*}
+  \]
 
   \1 The \textbf{Cholesky decomposition} of the semi-definite matrix $M$ is the
   \textbf{upper triangular} matrix $L$ such that

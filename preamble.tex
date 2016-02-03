@@ -1,4 +1,5 @@
 \usepackage[utf8]{inputenc}
+\usepackage{times}
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{amssymb}
@@ -39,10 +40,11 @@
 \newcommand{\normal}{\mathscr{N}}
 \newcommand{\logNormal}{\mathscr{LN}}
 \newcommand{\filtr}{\mathscr{F}}
+\newcommand{\E}{\bm E}
+\renewcommand{\Pr}{\bm P}
 
 \DeclareMathOperator{\Corr}{Corr}
 \DeclareMathOperator{\Var}{Var}
-\DeclareMathOperator{\E}{E}
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\erf}{erf}
 \DeclareMathOperator{\erfc}{erfc}
@@ -52,4 +54,13 @@
 \DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\chol}{chol}
 
+\newcommand\subsim{\mathrel{%
+  \ooalign{\raise0.2ex\hbox{$\subset$}\cr\hidewidth\raise-0.8ex\hbox{\scalebox{0.9}{$\sim$}}\hidewidth\cr}}}
+
 \newcommand{\reff}[1]{\mbox{}~\hfill \footnotesize{[#1]}\normalsize}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "handbook"
+%%% End:
+
